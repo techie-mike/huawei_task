@@ -17,6 +17,12 @@
 int main()
 {
     puts("Hello World\n");
-    while (1)
+    while (1) {
+	printf("Hello, from maix\n\n");
+	int tmp = 0;
+	asm (" li %1, 32": "+r"(tmp) ::);
+	printf(" Calculated data %d\n", tmp);
+	getchar();
+    }
         ;
 }
