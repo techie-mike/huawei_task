@@ -1,28 +1,35 @@
-/* Copyright 2018 Canaan Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 #include <stdio.h>
+#include <devices.h>
+#include <task.h>
+
+#include "opcodes.h"
+#include "test.h"
+
+void vTask() {
+    printf(" Task created\n");
+    while (1) {
+        RunTest(ONE_TEST, iconst_0);
+        vTaskDelay(2000 / portTICK_RATE_MS);
+    }
+}
+
 
 int main()
 {
-    puts("Hello World\n");
-    while (1) {
-	printf("Hello, from maix\n\n");
-	int tmp = 0;
-	asm (" li %1, 32": "+r"(tmp) ::);
-	printf(" Calculated data %d\n", tmp);
-	getchar();
-    }
-        ;
+
+    // Get char - to do not start programm immediatly 
+    //getchar();
+
+    puts("Interpreter executed\n");
+
+    // Call default test case
+    getchar();
+
+    xTaskCreate(vTask, "vTask", 20480, NULL, 3, NULL);
+
+    while(1);
+
+    return 0;
 }
+
+
