@@ -27,7 +27,10 @@ uint8_t pc = 0;
 
 // Method frame for method
 uint64_t frame[FRAME_SIZE];
+// TODO Move to local variable
 register uint64_t* curr_frame asm ("t1");
+// Frame pointer
+uint8_t fp = 0;
 
 void Init() {
     // 1. Clean intruction stack
@@ -48,6 +51,8 @@ void Init() {
 
 // Execute bytecode sequence
 void Execute(uint8_t* bc) {
+    // TODO Stack owerflow
+    // TODO Garbage collection
     while (1) {
         uint8_t opcode = bc[pc];
 
@@ -71,9 +76,13 @@ void Execute(uint8_t* bc) {
                 break;
             }
             case(return_) : {
-                // TODO support frame removing
-//                asm("ret");
-                return;
+                // TODO support frame removing and return from methods
+                if (fp == 0) {
+                    return;
+                } else {
+                    assert(fp < FRAME_SIZE);
+                    --fp;
+                }
                 break;
             }
             default:

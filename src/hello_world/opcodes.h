@@ -230,7 +230,7 @@ jsr_w = 201,
 /* Reserved */
 breakpoint = 202,
 
-//// CPECIAL
+//// SPECIAL
 dump_stack = 203,
 dump_frame = 204,
 dump_pc = 205,
